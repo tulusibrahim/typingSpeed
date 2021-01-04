@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/6c74545ce9.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <span id="timer" style="color: white; font-size: larger;"></span>
+            <h3 style="text-align: center;">How fast you type? Check it down below</h3>
+            <span id=" kett">Press enter after one word is done</span>
+            <span id="type" class="fas"></span>
+            <input type="text" id="inputtype" placeholder="Type it here!">
+            <button id="typing">Start</button>
+        </div>
+    </div>
+</body>
+<script>
+    let btntype = document.getElementById('typing')
+    let inputtype = document.getElementById('inputtype')
+    inputtype.style.transitionDuration = '.2'
+    let kett = document.getElementById('kett')
+    let naro = document.getElementById('type')
+    let timerText = document.getElementById('timer')
+    let timer = 60
+    let totalWords = 0
+    let generatedwords
+    let intervalTimer
+
+    function requestWords() {
+        naro.classList.add('fa-spinner')
+        naro.classList.add('fa-pulse')
+        naro.innerText = ''
+        let ajaxx = new XMLHttpRequest()
+        ajaxx.open("GET", "https://random-word-api.herokuapp.com/word?number=5", true)
+        ajaxx.send()
+        ajaxx.onreadystatechange = function (res) {
+            if (ajaxx.status >= 400) {
+                alert("Yah gagal :( coba pencet lagi ya?")
+            }
+            else {
+                naro.classList.remove('fa-spinner')
+                naro.classList.remove('fa-pulse')
+                inputtype.style.display = 'block'
+                naro.innerText = JSON.parse(res.currentTarget.response).join(", ")
+                generatedwords = JSON.parse(res.currentTarget.response)
+            }
+        }
+        intervalTimer = setInterval(() => {
+            timer -= 1
+            timerText.innerText = timer
+            if (timer < 1) {
+                clearInterval(intervalTimer)
+                inputtype.disabled = true
+                naro.innerText = "Your typing speed is " + totalWords / 1 + " WPM"
+                btntype.disabled = false
+                btntype.innerText = "Start over"
+            }
+        }, 1000);
+    }
+
+    btntype.addEventListener('click', function () {
+        timer = 60
+        btntype.disabled = true
+        inputtype.disabled = false
+        inputtype.value = ''
+        inputtype.focus()
+        count = 0
+        requestWords()
+    })
+
+    let count = 0
+    inputtype.addEventListener('keyup', function (res) {
+        if (inputtype.value == generatedwords[count]) {
+            inputtype.style.backgroundColor = 'rgb(42, 157, 143, .5)'
+        } else {
+            inputtype.style.backgroundColor = 'rgb(231, 111, 81, .5)'
+        }
+
+        if (res.keyCode == 13) {
+            if (inputtype.value == generatedwords[count]) {
+                inputtype.value = ''
+                count += 1
+                totalWords += 1
+                inputtype.style.backgroundColor = '#F4A261'
+                if (count > 4) {
+                    count = 0
+                    naro.innerText = ''
+                    clearInterval(intervalTimer)
+                    requestWords()
+                }
+            }
+            else {
+                inputtype.style.backgroundColor = '#D00000'
+            }
+        }
+    })
+</script>
+<style>
+    #typing {
+        width: 100px;
+        height: 30px;
+        border: none;
+        font-size: large;
+        cursor: pointer;
+        background-color: #E76F51;
+    }
+
+    #inputtype::placeholder {
+        text-align: center;
+    }
+
+    #inputtype {
+        display: none;
+        border: 1px black solid;
+        outline: none;
+        height: 30px;
+        text-align: center;
+    }
+
+    #timer {
+        top: 20px;
+        right: 20px;
+        position: absolute;
+    }
+
+    #type {
+        text-align: center;
+    }
+
+    #content {
+        width: 90vw;
+        height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        border-radius: 3px;
+        background-color: #E9C46A;
+    }
+
+    #wrapper {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #264653;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+
+</html>
