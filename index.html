@@ -13,11 +13,13 @@
     <div id="wrapper">
         <div id="content">
             <span id="timer" style="color: black; font-size: larger;"></span>
-            <h3 style="text-align: center;">How fast you type? Let's find out.</h3>
-            <span id=" kett">Press enter after one word is done</span>
-            <span id="type" class="fas"></span>
-            <input type="text" id="inputtype" placeholder="Type it here!">
-            <button id="typing">Start</button>
+            <div id="isi">
+                <h3 style="text-align: center;">How fast you type? Let's find out.</h3>
+                <span id=" kett" style="text-align: center;">Press enter after one word is done</span>
+                <span id="type" class="fas"></span>
+                <input type="text" id="inputtype" placeholder="Type it here!">
+                <button id="typing">Start</button>
+            </div>
         </div>
     </div>
 </body>
@@ -36,8 +38,8 @@
 
     //request random word from API
     function requestWords() {
-        naro.classList.add('fa-spinner')
-        naro.classList.add('fa-pulse')
+        naro.classList.add('fa-circle-notch')
+        naro.classList.add('fa-spin')
         naro.innerText = ''
         let ajaxx = new XMLHttpRequest()
         ajaxx.open("GET", "https://random-word-api.herokuapp.com/word?number=5", true)
@@ -47,8 +49,8 @@
                 alert("Yah gagal :( coba pencet lagi ya?")
             }
             else {
-                naro.classList.remove('fa-spinner')
-                naro.classList.remove('fa-pulse')
+                naro.classList.remove('fa-circle-notch')
+                naro.classList.remove('fa-spin')
                 inputtype.focus()
                 naro.innerText = JSON.parse(res.currentTarget.response).join(", ")
                 generatedwords = JSON.parse(res.currentTarget.response)
@@ -108,6 +110,23 @@
     })
 </script>
 <style>
+    #isi {
+        height: 93%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+    }
+
+    #timer {
+        height: 7%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
     #typing:hover {
         background-color: #E76F31;
     }
@@ -134,12 +153,6 @@
         background-color: rgb(231, 111, 81, .5);
     }
 
-    #timer {
-        top: 20px;
-        right: 20px;
-        position: absolute;
-    }
-
     #type {
         text-align: center;
     }
@@ -154,7 +167,7 @@
         border-radius: 3px;
         background-color: transparent;
         background: rgba(255, 255, 255, .08);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(15px);
     }
 
     #wrapper {
