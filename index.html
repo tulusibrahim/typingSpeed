@@ -15,12 +15,17 @@
             <span id="timer" style="color: black; font-size: larger;"></span>
             <div id="isi">
                 <h3 style="text-align: center;">How fast you type? Let's find out.</h3>
-                <span id=" kett" style="text-align: center;">Press enter after one word is done</span>
+                <span id=" kett" style="text-align: center;">Press space after one word is done</span>
                 <span id="type" class="fas"></span>
                 <input type="text" id="inputtype" placeholder="Type it here!">
                 <button id="typing">Start</button>
             </div>
         </div>
+    </div>
+    <div id="credit">Background By&nbsp;<a style="text-decoration: none; color: black;"
+            href="https://pixabay.com/id/users/pencilparker-7519217/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3047767">pencil
+            parker</a>&nbsp;from&nbsp;<a style="text-decoration: none; color: black;"
+            href="https://pixabay.com/id/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3047767">Pixabay</a>
     </div>
 </body>
 <script>
@@ -78,20 +83,25 @@
         inputtype.value = ''
         inputtype.focus()
         count = 0
+        totalWords = 0
         requestWords()
     })
 
-    inputtype.addEventListener('keyup', function (res) {
-        //check the current type word to change background
+    inputtype.addEventListener('keyup', function (e) {
+        //     //check the current type word to change background
         if (inputtype.value == generatedwords[count]) {
             inputtype.style.backgroundColor = 'rgb(42, 157, 143, .5)'
         } else {
             inputtype.style.backgroundColor = 'rgb(231, 111, 81, .5)'
         }
+    })
 
-        //check the value if its the same or not if, enter(13) is clicked
-        if (res.keyCode == 13) {
-            if (`${inputtype.value} ` == `${generatedwords[count]} `) {
+    inputtype.addEventListener('keydown', function (res) {
+
+        //check the value if its the same or not, if space(32) is clicked
+        if (res.keyCode == 32) {
+            res.preventDefault()
+            if (inputtype.value == generatedwords[count]) {
                 inputtype.value = ''
                 count += 1
                 totalWords += 1
@@ -170,12 +180,24 @@
         backdrop-filter: blur(15px);
     }
 
-    #wrapper {
+    #credit {
         width: 100vw;
-        height: 100vh;
+        height: 5vh;
         display: flex;
         align-items: center;
         justify-content: center;
+        background-color: #c29c8993;
+    }
+
+    #wrapper {
+        width: 100vw;
+        height: 95vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body {
         background-image: url('./cute-3047767_1920.jpg');
         background-position: center;
         background-size: cover;
