@@ -1,0 +1,94 @@
+#isi {
+    height: 93%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+#timer {
+    height: 7%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#typing:hover {
+    background-color: #E76F31;
+}
+
+#typing {
+    width: 100px;
+    height: 30px;
+    border: none;
+    font-size: large;
+    cursor: pointer;
+    background-color: #E76F51;
+}
+
+#inputtype::placeholder {
+    text-align: center;
+}
+
+#inputtype {
+    border: 1px black solid;
+    outline: none;
+    height: 30px;
+    width: 200px;
+    text-align: center;
+    background-color: rgb(231, 111, 81, .5);
+}
+
+#type {
+    text-align: center;
+}
+
+#content {
+    width: 90vw;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    border-radius: 3px;
+    background-color: transparent;
+    background: rgba(255, 255, 255, .08);
+    backdrop-filter: blur(15px);
+}
+
+#credit {
+    width: 100vw;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #c29c8993;
+}
+
+#wrapper {
+    width: 100vw;
+    height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    background-image: url('./cute-3047767_1920.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+@media screen and (max-width: 360px) {
+    #wrapper {
+        background-size: contain;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
