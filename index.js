@@ -11,24 +11,25 @@ let generatedwords
 let intervalTimer
 
 //request random word from API
-function requestWords() {
+async function requestWords() {
     naro.classList.add('fa-circle-notch')
     naro.classList.add('fa-spin')
     naro.innerText = ''
-    let ajaxx = new XMLHttpRequest()
-    ajaxx.open("GET", "https://random-word-api.herokuapp.com/word?number=5", true)
-    ajaxx.send()
-    ajaxx.onreadystatechange = function (res) {
-        if (ajaxx.status >= 400) {
+    try {
+        let result = await fetch("https://random-word-api.herokuapp.com/word?number=5")
+        let json = await result.json()
+        if (!json) {
             alert("Yah gagal :( coba pencet lagi ya?")
         }
         else {
             naro.classList.remove('fa-circle-notch')
             naro.classList.remove('fa-spin')
             inputtype.focus()
-            naro.innerText = JSON.parse(res.currentTarget.response).join(", ")
-            generatedwords = JSON.parse(res.currentTarget.response)
+            naro.innerText = json.join(", ")
+            generatedwords = json
         }
+    } catch (error) {
+        alert("Yah gagal :( coba pencet lagi ya?")
     }
     //give interval for countdown timer
     intervalTimer = setInterval(() => {
